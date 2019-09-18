@@ -1,7 +1,9 @@
 package kr.or.ddit.login.web;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.ddit.board.service.IBoardService;
 import kr.or.ddit.user.model.User;
 import kr.or.ddit.user.service.IUserService;
 
@@ -21,6 +24,9 @@ public class LoginController {
 	
 	@Resource(name = "userService")
 	private IUserService userService;
+	
+	@Resource(name = "boardService")
+	private IBoardService boardService;
 	
 	/**
 	* Method : view
@@ -50,7 +56,7 @@ public class LoginController {
 	*/
 	@RequestMapping(path = "login", method = RequestMethod.POST)
 	public String loginProcess(String userId, String pass, String rememberMe,
-								HttpServletResponse response, HttpSession session) {
+								HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
 		manageUserIdCookie(response, userId, rememberMe);
 
@@ -59,8 +65,14 @@ public class LoginController {
 		if(user == null) {
 			return "login/login";
 		} else if(user.checkLoginValidate(userId, pass)) {
+			// session에 user정보 넣기
 			session.setAttribute("S_USERVO", user);
-			return "main";
+
+			// application에 boardList 넣기
+			ServletContext application = request.getServletContext();
+			application.setAttribute("boardList", boardService.getBoardList());
+
+			return "redirect:/main";
 		} else {
 			return "login/login";
 		}

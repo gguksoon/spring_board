@@ -21,7 +21,7 @@ public class ContextPathInitListener implements ServletContextListener{
 		ServletContext sc = sce.getServletContext();
 		sc.setAttribute("cp", sc.getContextPath());
 		
-		sc.setAttribute("S_USERVO_LIST", new ArrayList<User>());
+//		sc.setAttribute("S_USERVO_LIST", new ArrayList<User>());
 		
 //		logger.debug("contextPathInitListener ==> cp: {}", sc.getAttribute("cp"));
 	}

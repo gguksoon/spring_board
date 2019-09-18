@@ -34,7 +34,7 @@
 
 				<!-- Breadcrumbs-->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item active">JSP</li>
+					<li class="breadcrumb-item active">SPRING</li>
 				</ol>
 
 				<!-- Icon Cards-->

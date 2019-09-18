@@ -76,7 +76,7 @@
 
 				<!-- Breadcrumbs-->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="${cp }/main">JSP</a></li>
+					<li class="breadcrumb-item"><a href="${cp }/main">SPRING</a></li>
 					<li class="breadcrumb-item active">게시판 관리</li>
 				</ol>
 
