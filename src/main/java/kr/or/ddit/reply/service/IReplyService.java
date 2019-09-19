@@ -8,7 +8,7 @@ public interface IReplyService {
 
 	/**
 	* Method : getReplyList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -18,7 +18,7 @@ public interface IReplyService {
 	
 	/**
 	* Method : insertReply
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param reply
 	* @return
@@ -28,7 +28,7 @@ public interface IReplyService {
 
 	/**
 	* Method : deleteReply
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param replySeq
 	* @return

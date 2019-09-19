@@ -4,7 +4,7 @@ public class CookieUtil {
 
 	/**
 	* Method : getCookie
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param cookieString
 	* @param string

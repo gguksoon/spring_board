@@ -28,4 +28,10 @@
 		<!-- ex) prefix + viewName(index) + suffix ==> /WEB-INF/views/(index).jsp -->
 		<!-- 	==> index를 요청하면 /WEB-INF/views/index.jsp가 요청됨 -->
 	</bean>
+	
+	<!-- multipartResolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+ 		<property name="maxUploadSize" value="5242880"/> <!--5MB	 -->
+		<property name="maxUploadSizePerFile" value="26214400"/>	<!-- 25MB -->
+	</bean>
 </beans>

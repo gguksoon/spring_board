@@ -10,7 +10,7 @@ import kr.or.ddit.user.repository.IUserDao;
 @Service
 public class UserService implements IUserService {
 
-	@Resource(name="userDao")
+	@Resource(name = "userDao")
 	private IUserDao userDao;
 	
 	/**

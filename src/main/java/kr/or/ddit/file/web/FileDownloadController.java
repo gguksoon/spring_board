@@ -27,7 +27,7 @@ public class FileDownloadController extends HttpServlet {
 	
 	/**
 	* Method : doGet
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param request
 	* @param response

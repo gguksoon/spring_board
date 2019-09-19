@@ -2,24 +2,22 @@ package kr.or.ddit.file.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.file.model.File;
-import kr.or.ddit.file.repository.FileDao;
 import kr.or.ddit.file.repository.IFileDao;
-import kr.or.ddit.util.MybatisUtil;
 
+@Service
 public class FileService implements IFileService {
 
-	IFileDao fileDao;
-	
-	public FileService() {
-		fileDao = new FileDao();
-	}
+	@Resource(name = "fileDao")
+	private IFileDao fileDao;
 	
 	/**
 	* Method : insertFile
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param file
 	* @return
@@ -27,18 +25,12 @@ public class FileService implements IFileService {
 	*/
 	@Override
 	public int insertFile(File file) {
-		SqlSession ss = MybatisUtil.getSession();
-		int insertCnt = fileDao.insertFile(ss, file);
-		
-		ss.commit();
-		ss.close();
-		
-		return insertCnt;
+		return fileDao.insertFile(file);
 	}
 
 	/**
 	* Method : getFileList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -46,18 +38,12 @@ public class FileService implements IFileService {
 	*/
 	@Override
 	public List<File> getFileList(int postSeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		List<File> fileList = fileDao.getFileList(ss, postSeq);
-		
-		ss.close();
-		
-		return fileList;
-
+		return fileDao.getFileList(postSeq);
 	}
 
 	/**
 	* Method : getFile
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param fileSeq
 	* @return
@@ -65,17 +51,12 @@ public class FileService implements IFileService {
 	*/
 	@Override
 	public File getFile(int fileSeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		File file = fileDao.getFile(ss, fileSeq);
-		
-		ss.close();
-		
-		return file;
+		return fileDao.getFile(fileSeq);
 	}
 
 	/**
 	* Method : deleteFile
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param fileSeq
 	* @return
@@ -83,13 +64,7 @@ public class FileService implements IFileService {
 	*/
 	@Override
 	public int deleteFile(int fileSeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		int deleteCnt = fileDao.deleteFile(ss, fileSeq);
-		
-		ss.commit();
-		ss.close();
-		
-		return deleteCnt;
+		return fileDao.deleteFile(fileSeq);
 	}
 
 }

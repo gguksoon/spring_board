@@ -2,15 +2,22 @@ package kr.or.ddit.reply.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.annotation.Resource;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.reply.model.Reply;
 
+@Repository
 public class ReplyDao implements IReplyDao {
 
+	@Resource(name="sqlSessionTemplate")
+	private SqlSessionTemplate sqlSession;
+	
 	/**
 	* Method : getReplyList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param ss
 	* @param postSeq
@@ -18,13 +25,13 @@ public class ReplyDao implements IReplyDao {
 	* Method 설명 : postSeq에 해당하는 댓글리스트 반환
 	*/
 	@Override
-	public List<Reply> getReplyList(SqlSession ss, int postSeq) {
-		return ss.selectList("reply.getReplyList", postSeq);
+	public List<Reply> getReplyList(int postSeq) {
+		return sqlSession.selectList("reply.getReplyList", postSeq);
 	}
 
 	/**
 	* Method : insertReply
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param ss
 	* @param reply
@@ -32,13 +39,13 @@ public class ReplyDao implements IReplyDao {
 	* Method 설명 : 댓글 추가
 	*/
 	@Override
-	public int insertReply(SqlSession ss, Reply reply) {
-		return ss.insert("reply.insertReply", reply);
+	public int insertReply(Reply reply) {
+		return sqlSession.insert("reply.insertReply", reply);
 	}
 
 	/**
 	* Method : deleteReply
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param ss
 	* @param replySeq
@@ -46,8 +53,8 @@ public class ReplyDao implements IReplyDao {
 	* Method 설명 : 댓글 삭제
 	*/
 	@Override
-	public int deleteReply(SqlSession ss, int replySeq) {
-		return ss.update("reply.deleteReply", replySeq);
+	public int deleteReply(int replySeq) {
+		return sqlSession.update("reply.deleteReply", replySeq);
 	}
 
 }

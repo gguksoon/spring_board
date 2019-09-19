@@ -4,24 +4,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.post.model.Post;
 import kr.or.ddit.post.repository.IPostDao;
 import kr.or.ddit.post.repository.PostDao;
 import kr.or.ddit.util.MybatisUtil;
 
+@Service
 public class PostService implements IPostService {
 
+	@Resource(name = "postDao")
 	private IPostDao postDao;
-	
-	public PostService() {
-		postDao = new PostDao();
-	}
 	
 	/**
 	* Method : getPostPagingList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param map
 	* @return
@@ -31,24 +32,21 @@ public class PostService implements IPostService {
 	public Map<String, Object> getPostPagingList(Map<String, Object> map) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		SqlSession ss = MybatisUtil.getSession();
 		String boardSeq = "" + map.get("boardSeq");
-		List<Map> postList = postDao.getPostPagingList(ss, map);
-		int totalCnt = postDao.getPostTotalCnt(ss, boardSeq);
+		List<Map> postList = postDao.getPostPagingList(map);
+		int totalCnt = postDao.getPostTotalCnt(boardSeq);
 		
 		int pagesize = (int) map.get("pagesize");
 		
 		resultMap.put("postList", postList);
 		resultMap.put("paginationSize", (int)Math.ceil((double)totalCnt / pagesize));
 		
-		ss.close();
-		
 		return resultMap;
 	}
 
 	/**
 	* Method : getPost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -56,16 +54,12 @@ public class PostService implements IPostService {
 	*/
 	@Override
 	public Post getPost(int postSeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		Post post = postDao.getPost(ss, postSeq);
-		ss.close();
-		
-		return post;
+		return postDao.getPost(postSeq);
 	}
 
 	/**
 	* Method : insertPost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param post
 	* @return
@@ -73,25 +67,21 @@ public class PostService implements IPostService {
 	*/
 	@Override
 	public int insertPost(Post post) {
-		SqlSession ss = MybatisUtil.getSession();
 		
-		int nextPostSeq = postDao.getPostNextSeq(ss);
+		int nextPostSeq = postDao.getPostNextSeq();
 		post.setPostSeq(nextPostSeq);
 		
 		if(post.getPostGn() == 0)
-			post.setPostGn(postDao.getPostGnNextSeq(ss));
+			post.setPostGn(postDao.getPostGnNextSeq());
 			
-		postDao.insertPost(ss, post);
-		
-		ss.commit();
-		ss.close();
+		postDao.insertPost(post);
 		
 		return nextPostSeq;
 	}
 
 	/**
 	* Method : deletePost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -99,18 +89,12 @@ public class PostService implements IPostService {
 	*/
 	@Override
 	public int deletePost(int postSeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		int deleteCnt = postDao.deletePost(ss, postSeq);
-		
-		ss.commit();
-		ss.close();
-		
-		return deleteCnt;
+		return postDao.deletePost(postSeq);
 	}
 
 	/**
 	* Method : updatePost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param post
 	* @return
@@ -118,13 +102,7 @@ public class PostService implements IPostService {
 	*/
 	@Override
 	public int updatePost(Post post) {
-		SqlSession ss = MybatisUtil.getSession();
-		int updateCnt = postDao.updatePost(ss, post);
-		
-		ss.commit();
-		ss.close();
-		
-		return updateCnt;
+		return postDao.updatePost(post);
 	}
 
 }

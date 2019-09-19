@@ -8,7 +8,7 @@ public interface IPostService {
 
 	/**
 	* Method : getPostPagingList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param map
 	* @return
@@ -18,7 +18,7 @@ public interface IPostService {
 
 	/**
 	* Method : getPost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -28,7 +28,7 @@ public interface IPostService {
 
 	/**
 	* Method : insertPost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param post
 	* @return
@@ -38,7 +38,7 @@ public interface IPostService {
 
 	/**
 	* Method : deletePost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -48,7 +48,7 @@ public interface IPostService {
 
 	/**
 	* Method : updatePost
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param post
 	* @return

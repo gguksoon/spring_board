@@ -109,7 +109,8 @@ function validation(){
 					</div>
 					
 					<br><br><br>
-					<textarea name="content" id="smarteditor" rows="10" cols="100" class="col-sm-10" style="width:800px; height:500px;"></textarea>
+					<textarea name="postContent" id="smarteditor" rows="10" cols="100" class="col-sm-10" style="width:800px; height:500px;"></textarea>
+					
 					<div class="form-group">
 						<br><br><br>
 						<label for="files" class="col-sm-3 control-label">첨부파일: </label>

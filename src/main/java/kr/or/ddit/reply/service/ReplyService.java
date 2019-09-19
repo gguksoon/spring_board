@@ -2,25 +2,22 @@ package kr.or.ddit.reply.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.reply.model.Reply;
 import kr.or.ddit.reply.repository.IReplyDao;
-import kr.or.ddit.reply.repository.ReplyDao;
-import kr.or.ddit.util.MybatisUtil;
 
+@Service
 public class ReplyService implements IReplyService {
 
+	@Resource(name = "replyDao")
 	private IReplyDao replyDao;
-	
-	public ReplyService() {
-		replyDao = new ReplyDao();
-	}
-
 	
 	/**
 	* Method : getReplyList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -28,16 +25,12 @@ public class ReplyService implements IReplyService {
 	*/
 	@Override
 	public List<Reply> getReplyList(int postSeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		List<Reply> replyList = replyDao.getReplyList(ss, postSeq);
-		ss.close();
-		
-		return replyList;
+		return replyDao.getReplyList(postSeq);
 	}
 
 	/**
 	* Method : insertReply
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param reply
 	* @return
@@ -45,18 +38,12 @@ public class ReplyService implements IReplyService {
 	*/
 	@Override
 	public int insertReply(Reply reply) {
-		SqlSession ss = MybatisUtil.getSession();
-		int insertCnt = replyDao.insertReply(ss, reply);
-		
-		ss.commit();
-		ss.close();
-		
-		return insertCnt;
+		return replyDao.insertReply(reply);
 	}
 
 	/**
 	* Method : deleteReply
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param replySeq
 	* @return
@@ -64,13 +51,7 @@ public class ReplyService implements IReplyService {
 	*/
 	@Override
 	public int deleteReply(int replySeq) {
-		SqlSession ss = MybatisUtil.getSession();
-		int deleteCnt = replyDao.deleteReply(ss, replySeq);
-		
-		ss.commit();
-		ss.close();
-		
-		return deleteCnt;
+		return replyDao.deleteReply(replySeq);
 	}
 
 }

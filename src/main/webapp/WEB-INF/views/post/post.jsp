@@ -132,6 +132,7 @@
 											${reply.replyContent } [ ${reply.userId } | <fmt:formatDate value="${reply.replyRegDate }" pattern="yyyy/MM/dd HH:mm"/> ]
 											<c:if test="${reply.userId == S_USERVO.userId }">
 												<input type="hidden" name="postSeq" value="${post.postSeq }"/>
+												<input type="hidden" name="boardSeq" value="${post.boardSeq }"/>
 												<input type="hidden" name="replySeq" value="${reply.replySeq }" />
 												<button type="button" class="btnDeleteReply btn btn-xs">
 													<i class="fas fa-trash-alt"></i>

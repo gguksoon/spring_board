@@ -8,7 +8,7 @@ public interface IFileService {
 
 	/**
 	* Method : insertFile
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param file
 	* @return
@@ -18,7 +18,7 @@ public interface IFileService {
 
 	/**
 	* Method : getFileList
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param postSeq
 	* @return
@@ -28,7 +28,7 @@ public interface IFileService {
 
 	/**
 	* Method : getFile
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param fileSeq
 	* @return
@@ -38,7 +38,7 @@ public interface IFileService {
 
 	/**
 	* Method : deleteFile
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param fileSeq
 	* @return

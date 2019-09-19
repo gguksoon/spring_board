@@ -8,7 +8,7 @@ public class FileuploadUtil {
 
 	/**
 	* Method : getFilename
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* @param contentDisposition
 	* @return
 	* 변경이력 :
@@ -38,7 +38,7 @@ public class FileuploadUtil {
 
 	/**
 	* Method : getFileExtension
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @param contentDisposition
 	* @return
@@ -56,7 +56,7 @@ public class FileuploadUtil {
 
 	/**
 	* Method : getPath
-	* 작성자 : Jo Min-Soo
+	* 작성자 : JO MIN SOO
 	* 변경이력 :
 	* @return
 	* Method 설명 : 파일을 업로드할 경로를 조회한다.
