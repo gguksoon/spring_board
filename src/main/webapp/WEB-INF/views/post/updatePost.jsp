@@ -51,6 +51,11 @@ $(document).ready(function() {
 		}
 	});
 	
+	$("#cancelBtn").click(function(){
+		if(confirm("취소하시겠습니까?")) 
+			location.href = "${cp }/post?boardSeq=${param.boardSeq }&postSeq=${param.postSeq }";
+	});
+	
 	$("#files").on("change", function() {
 		console.log("length: " + this.files.length);
 		if(this.files.length > (5 - $(".deleteRegFile").length)) { // 파일의 갯수가 5개 초과일 때
@@ -92,7 +97,7 @@ function validation(){
 
 				<!-- Breadcrumbs-->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="${cp }/main">JSP</a></li>
+					<li class="breadcrumb-item"><a href="${cp }/main">SPRING</a></li>
 					<li class="breadcrumb-item"><a href="${cp }/postPagingList?boardSeq=${board.boardSeq }">${board.boardNm }</a></li>
 					<li class="breadcrumb-item active">${post.postNm }</li>
 				</ol>
@@ -108,7 +113,7 @@ function validation(){
 					</div>
 					
 					<br><br><br>
-					<textarea name="content" id="smarteditor" rows="10" cols="100" class="col-sm-10" style="width:800px; height:500px;">${post.postContent }</textarea>
+					<textarea name="postContent" id="smarteditor" rows="10" cols="100" class="col-sm-10" style="width:800px; height:500px;">${post.postContent }</textarea>
 					<br><br><br>
 					<label class="control-label">첨부된 파일: </label><br>
 					<div class="col-sm-6">

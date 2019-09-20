@@ -1,7 +1,9 @@
 package kr.or.ddit.post.web;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -12,22 +14,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.board.model.Board;
 import kr.or.ddit.board.service.IBoardService;
 import kr.or.ddit.common.model.Page;
+import kr.or.ddit.file.model.File;
 import kr.or.ddit.file.service.IFileService;
 import kr.or.ddit.post.model.Post;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.reply.service.IReplyService;
+import kr.or.ddit.util.FileUtil;
+import kr.or.ddit.util.model.FileInfo;
 
 @Controller
 public class PostController {
 
-	private static final Logger logger = LoggerFactory.getLogger(PostController.class);
-	
 	@Resource(name = "boardService")
 	private IBoardService boardService;
 	
@@ -98,99 +102,72 @@ public class PostController {
 	
 	@PostMapping("insertPost")
 	public String insertPost(int boardSeq, String userId, String postNm, String postContent,
-							 Integer postSeq, Integer postGn, @RequestPart("files") MultipartFile files) {
+							 Integer postSeq, Integer postGn, @RequestPart("files") List<MultipartFile> files) {
 		postGn = postGn == null ? 0 : postGn + 1; 
 		Integer parentSeq = postSeq == null ? null : postSeq;
 		
 		Post post = new Post(0, boardSeq, postNm, postContent, userId,
 							 new Date(), new Date(), 1, postGn, parentSeq);
 		
+		// 게시글 추가
 		int insertPostSeq = postService.insertPost(post);
 		
-		//====================================================================
-//		List<Part> parts = (List<Part>) request.getParts();
-//		
-//		for(Part part : parts) {
-//			if(part.getName().equalsIgnoreCase("files")) {
-//				String filename = "";
-//				String path = "";
-//				if(part.getSize() > 0) {
-//					filename = FileuploadUtil.getFilename(part.getHeader("Content-Disposition"));
-//					String realFileName = UUID.randomUUID().toString();
-//					String ext = FileuploadUtil.getFileExtension(part.getHeader("Content-Disposition"));
-//					path = FileuploadUtil.getPath() + realFileName + ext;
-//					
-//					part.write(path);
-//					
-//					// 파일테이블에 추가
-//					File file = new File(0, filename, path, postSeq);
-//					fileService.insertFile(file);
-//				}
-//			}
-//		}
+		// 파일 업로드
+		for(MultipartFile file : files) {
+			if(file.getSize() > 0) {
+				// 업로드 되는 시점의 년/월 폴더를 생성해주고, 파일 경로와 파일 정보를 FileInfo객체에 담아 리턴
+				FileInfo fileInfo = FileUtil.getFileInfo(file.getOriginalFilename());
+				
+				try {
+					// 파일 전송
+					file.transferTo(fileInfo.getFile());
+					File f = new File(0, fileInfo.getOriginalFileName(), fileInfo.getFile().toString(), insertPostSeq);
+					fileService.insertFile(f);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		return "redirect:/post?boardSeq=" + boardSeq + "&postSeq=" + insertPostSeq;
 	}
 	
 	@GetMapping("updatePost")
-	public String updatePostView() {
-//		List<Board> boardList = boardService.getBoardList();
-//		
-//		String boardSeq = request.getParameter("boardSeq");
-//		Board board = boardService.getBoard(boardSeq);
-//		
-//		int postSeq = Integer.parseInt(request.getParameter("postSeq"));
-//		
-//		Post post = postService.getPost(postSeq);
-//		List<File> fileList = fileService.getFileList(postSeq);
-//		
-//		request.setAttribute("boardList", boardList);
-//		request.setAttribute("board", board);
-//		request.setAttribute("post", post);
-//		request.setAttribute("fileList", fileList);
-//		
-//		request.getRequestDispatcher("/updatePost.jsp").forward(request, response);
-		return "";
+	public String updatePostView(Model model, int boardSeq, int postSeq) {
+		model.addAttribute("board", boardService.getBoard(boardSeq));
+		model.addAttribute("post", postService.getPost(postSeq));
+		model.addAttribute("fileList", fileService.getFileList(postSeq));
+
+		return "post/updatePost";
 	}
 	
 	@PostMapping("updatePost")
-	public String updatePost() {
-//		request.setAttribute("boardList", boardService.getBoardList());
-//		
-//		int boardSeq = Integer.parseInt(request.getParameter("boardSeq"));
-//		
-//		int postSeq = Integer.parseInt(request.getParameter("postSeq"));
-//		String postNm = request.getParameter("postNm");
-//		String postContent = request.getParameter("content");
-//		
-//		Post post = new Post(postSeq, postNm, postContent, new Date());
-//		
-//		postService.updatePost(post);
-//		
-//		//====================================================================
-//		List<Part> parts = (List<Part>) request.getParts();
-//		
-//		for(Part part : parts) {
-//			if(part.getName().equalsIgnoreCase("files")) {
-//				String filename = "";
-//				String path = "";
-//				if(part.getSize() > 0) {
-//					filename = FileuploadUtil.getFilename(part.getHeader("Content-Disposition"));
-//					String realFileName = UUID.randomUUID().toString();
-//					String ext = FileuploadUtil.getFileExtension(part.getHeader("Content-Disposition"));
-//					path = FileuploadUtil.getPath() + realFileName + ext;
-//					
-//					part.write(path);
-//					
-//					// 파일테이블에 추가
-//					File file = new File(0, filename, path, postSeq);
-//					fileService.insertFile(file);
-//				}
-//			}
-//		}
-//		
-//		response.sendRedirect(request.getContextPath() + "/post?boardSeq=" + boardSeq + "&postSeq=" + postSeq);
-//	
-		return "";
+	public String updatePost(int boardSeq, int postSeq, String postNm, String postContent, 
+							 @RequestPart("files") List<MultipartFile> files) {
+		Post post = postService.getPost(postSeq);
+		post.setPostNm(postNm);
+		post.setPostContent(postContent);
+		post.setPostModDate(new Date());
+		
+		postService.updatePost(post);
+		
+//		// 파일 업로드
+		// 파일 전송을 안해도 filename이 ""인 1개가 생성됨.. 그래서 예외처리 
+		for(MultipartFile file : files) {
+			if(file.getSize() > 0) {
+				// 업로드 되는 시점의 년/월 폴더를 생성해주고, 파일 경로와 파일 정보를 FileInfo객체에 담아 리턴
+				FileInfo fileInfo = FileUtil.getFileInfo(file.getOriginalFilename());
+				
+				try {
+					// 파일 전송
+					file.transferTo(fileInfo.getFile());
+					File f = new File(0, fileInfo.getOriginalFileName(), fileInfo.getFile().toString(), postSeq);
+					fileService.insertFile(f);
+				} catch (IllegalStateException | IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return "redirect:/post?boardSeq=" + boardSeq + "&postSeq=" + postSeq;
 	}
 	
 	@PostMapping("deletePost")

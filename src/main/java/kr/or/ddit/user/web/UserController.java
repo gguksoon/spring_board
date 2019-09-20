@@ -1,7 +1,12 @@
-package kr.or.ddit.login.web;
+package kr.or.ddit.user.web;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,17 +15,18 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import kr.or.ddit.board.service.IBoardService;
 import kr.or.ddit.user.model.User;
 import kr.or.ddit.user.service.IUserService;
 
 @Controller
-public class LoginController {
+public class UserController {
 
-	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Resource(name = "userService")
 	private IUserService userService;
@@ -35,10 +41,8 @@ public class LoginController {
 	* @return
 	* Method 설명 : 로그인 화면 요청 처리(forward) 
 	*/
-	@RequestMapping(path = "login", method = RequestMethod.GET) 
-	public String view() {
-		//TODO cookie 처리는 생략
-		
+	@GetMapping("login") 
+	public String loginView() {
 		return "login/login";
 	}
 	
@@ -54,7 +58,7 @@ public class LoginController {
 	* @return
 	* Method 설명 : 로그인 요청 처리 
 	*/
-	@RequestMapping(path = "login", method = RequestMethod.POST)
+	@PostMapping("login")
 	public String loginProcess(String userId, String pass, String rememberMe,
 								HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
@@ -86,5 +90,31 @@ public class LoginController {
 		else 
 			cookie.setMaxAge(0);
 		response.addCookie(cookie);
+	}
+	
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		session.invalidate(); // 세션의 모든 내용을 지움
+		
+		return "redirect:/login";
+	}
+	
+	@RequestMapping("userPicture")
+	public void userPicture(String userId, HttpServletResponse response) throws IOException {
+		User user = userService.getUser(userId);
+		
+		ServletOutputStream sos = response.getOutputStream();
+		
+		File picture = new File(user.getRealFileName());
+		FileInputStream fis = new FileInputStream(picture);
+		
+		byte[] buff = new byte[512];
+		int len = 0;
+		
+		while( (len = fis.read(buff, 0, 512)) != -1 ) {
+			sos.write(buff, 0, len);
+		}
+		
+		fis.close();
 	}
 }

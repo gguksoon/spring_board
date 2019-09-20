@@ -100,7 +100,7 @@
 
 				<!-- Breadcrumbs-->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="${cp }/main">JSP</a></li>
+					<li class="breadcrumb-item"><a href="${cp }/main">SPRING</a></li>
 					<li class="breadcrumb-item"><a href="${cp }/postPagingList?boardSeq=${board.boardSeq }">${board.boardNm }</a></li>
 					<li class="breadcrumb-item active">${post.postNm }</li>
 				</ol>
@@ -114,9 +114,10 @@
 					<!-- 내용 -->
 					${post.postContent }
 					<hr> 
+					<!-- 첨부파일 -->
 					첨부파일:<br>
 					<c:forEach items="${fileList }" var="file">
-				         <a href="${cp }/fileDownload?fileSeq=${file.fileSeq }" class="btn btn-dark btn-sm" download>
+				         <a href="${cp }/fileDownloadView?fileSeq=${file.fileSeq }" class="btn btn-dark btn-sm">
       							<i class="fas fa-download"></i> Download
       						</a>
 						${file.fileName }<br>

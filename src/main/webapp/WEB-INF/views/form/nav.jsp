@@ -59,6 +59,14 @@
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
       </li>
+      <li>
+	      <div>
+	      	&nbsp;&nbsp;
+	      	<img src="${cp }/userPicture?userId=${S_USERVO.userId}" style="width:40px; height:40px; border-radius: 50%;"/>
+	      	&nbsp;
+	      	<font color="white">${S_USERVO.userId }</font>
+	      </div>
+      </li>
     </ul>
 
   </nav>

@@ -91,7 +91,7 @@ function validation(){
 
 				<!-- Breadcrumbs-->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a href="${cp }/main">JSP</a></li>
+					<li class="breadcrumb-item"><a href="${cp }/main">SPRING</a></li>
 					<li class="breadcrumb-item"><a href="${cp }/postPagingList?boardSeq=${board.boardSeq }">${board.boardNm }</a></li>
 					<li class="breadcrumb-item active">새글쓰기</li>
 				</ol>
