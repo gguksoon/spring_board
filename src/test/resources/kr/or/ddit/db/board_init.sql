@@ -469,5 +469,13 @@ insert into gs_reply values(seq_reply.nextval, 1, 'brown', '댓글여섯', sysda
 insert into gs_reply values(seq_reply.nextval, 1, 'sally', '댓글일곱', sysdate, null, 1);
 insert into gs_reply values(seq_reply.nextval, 1, 'sally', '댓글여덟', sysdate, null, 1);
 
+-- 파일 추가
+insert into gs_file values(seq_file.nextval, 'brown.png', 'e:\springBoardUpload\2019\09\d5826f50-4269-4d63-992e-64654d32fb90.png', 1);
+insert into gs_file values(seq_file.nextval, 'cony.png', 'e:\springBoardUpload\2019\09\cd3c90af-370c-4b38-8640-49f7c5dad583.png', 1);
+insert into gs_file values(seq_file.nextval, 'james.png', 'e:\springBoardUpload\2019\09\c9b7a6b2-c052-44a0-b2f4-f09b427a5a1a.png', 1);
+insert into gs_file values(seq_file.nextval, 'moon.png', 'e:\springBoardUpload\2019\09\4b9365ee-8b82-448d-adf4-3d97cec552d7.png', 1);
+insert into gs_file values(seq_file.nextval, 'sally.png', 'e:\springBoardUpload\2019\09\c4fa0579-8c96-4dac-af76-1658f53144bd.png', 1);
+insert into gs_file values(seq_file.nextval, 'ryan.png', 'e:\springBoardUpload\2019\09\0053a63f-8b80-4638-ab40-db8c58fe6020.png', 15);
+
 -- 커밋
 commit;

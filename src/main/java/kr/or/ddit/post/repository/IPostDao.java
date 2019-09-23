@@ -3,8 +3,6 @@ package kr.or.ddit.post.repository;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
-
 import kr.or.ddit.post.model.Post;
 
 public interface IPostDao {

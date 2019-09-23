@@ -8,13 +8,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,6 +42,17 @@ public class PostController {
 	private IFileService fileService;
 	
 	
+	/**
+	* Method : postPagingList
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param boardSeq
+	* @param page
+	* @param pagesize
+	* @return
+	* Method 설명 : 게시글 페이징 리스트 반환
+	*/
 	@GetMapping("postPagingList")
 	public String postPagingList(Model model, int boardSeq, Integer page, Integer pagesize) {
 		// pagingList에 파라미터로 넘겨주기 위해 받는 현재 게시판 시퀀스
@@ -71,8 +79,18 @@ public class PostController {
 		return "post/postPagingList";
 	}
 	
+	/**
+	* Method : postView
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param postSeq
+	* @param boardSeq
+	* @return
+	* Method 설명 : 게시글 페이지 요청
+	*/
 	@GetMapping("post")
-	public String post(Model model, int postSeq, int boardSeq) {
+	public String postView(Model model, int postSeq, int boardSeq) {
 		model.addAttribute("post", postService.getPost(postSeq));
 		model.addAttribute("boardSeq", boardSeq);
 		model.addAttribute("board", boardService.getBoard(boardSeq));
@@ -83,6 +101,17 @@ public class PostController {
 		
 	}
 	
+	/**
+	* Method : insertPostView
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param boardSeq
+	* @param postSeq
+	* @param postGn
+	* @return
+	* Method 설명 : 게시글 작성 페이지 요청
+	*/
 	@GetMapping("insertPost")
 	public String insertPostView(Model model, int boardSeq, Integer postSeq, Integer postGn) {
 		// 새글, 답글 모두 적용
@@ -100,6 +129,20 @@ public class PostController {
 		return "post/insertPost";
 	}
 	
+	/**
+	* Method : insertPost
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param boardSeq
+	* @param userId
+	* @param postNm
+	* @param postContent
+	* @param postSeq
+	* @param postGn
+	* @param files
+	* @return
+	* Method 설명 : 게시글 추가
+	*/
 	@PostMapping("insertPost")
 	public String insertPost(int boardSeq, String userId, String postNm, String postContent,
 							 Integer postSeq, Integer postGn, @RequestPart("files") List<MultipartFile> files) {
@@ -131,6 +174,16 @@ public class PostController {
 		return "redirect:/post?boardSeq=" + boardSeq + "&postSeq=" + insertPostSeq;
 	}
 	
+	/**
+	* Method : updatePostView
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param model
+	* @param boardSeq
+	* @param postSeq
+	* @return
+	* Method 설명 : 게시글 수정 페이지 요청
+	*/
 	@GetMapping("updatePost")
 	public String updatePostView(Model model, int boardSeq, int postSeq) {
 		model.addAttribute("board", boardService.getBoard(boardSeq));
@@ -140,6 +193,18 @@ public class PostController {
 		return "post/updatePost";
 	}
 	
+	/**
+	* Method : updatePost
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param boardSeq
+	* @param postSeq
+	* @param postNm
+	* @param postContent
+	* @param files
+	* @return
+	* Method 설명 : 게시글 수정
+	*/
 	@PostMapping("updatePost")
 	public String updatePost(int boardSeq, int postSeq, String postNm, String postContent, 
 							 @RequestPart("files") List<MultipartFile> files) {
@@ -170,6 +235,15 @@ public class PostController {
 		return "redirect:/post?boardSeq=" + boardSeq + "&postSeq=" + postSeq;
 	}
 	
+	/**
+	* Method : deletePost
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param postSeq
+	* @param boardSeq
+	* @return
+	* Method 설명 : 게시글 삭제
+	*/
 	@PostMapping("deletePost")
 	public String deletePost(int postSeq, int boardSeq) {
 		postService.deletePost(postSeq);

@@ -114,22 +114,27 @@ function validation(){
 					
 					<br><br><br>
 					<textarea name="postContent" id="smarteditor" rows="10" cols="100" class="col-sm-10" style="width:800px; height:500px;">${post.postContent }</textarea>
-					<br><br><br>
-					<label class="control-label">첨부된 파일: </label><br>
-					<div class="col-sm-6">
-						<c:forEach items="${fileList }" var="file">
-							- ${file.fileName } 
-							<a href="${cp }/deleteFile?fileSeq=${file.fileSeq }&postSeq=${post.postSeq }&boardSeq=${board.boardSeq }" class="deleteRegFile">
-								<i class="far fa-times-circle"></i>
-							</a>
+					
+					<br><br>
+					<div class="form-group col-lg-12">
+						<label class="col-sm-1 control-label">첨부된 파일: </label>
+						<div class="col-sm-6">
 							<br>
-						</c:forEach>
+							<c:forEach items="${fileList }" var="file">
+								- ${file.fileName } 
+								<a href="${cp }/deleteFile?fileSeq=${file.fileSeq }&postSeq=${post.postSeq }&boardSeq=${board.boardSeq }" class="deleteRegFile">
+									<i class="far fa-times-circle"></i>
+								</a>
+								<br>
+							</c:forEach>
+						</div>
 					</div>
 					<br><br>
 					
-					<div class="form-group">
-						<label for="files" class="col-sm-3 control-label">첨부파일: </label>
-						<div class="col-sm-9">
+					<div class="form-group col-lg-12">
+						<br>
+						<label for="files" class="col-sm-1 control-label"> 첨부파일: </label>
+						<div class="col-sm-2">
 							<input type="file" multiple="multiple" class="form-control-file border" id="files" name="files" placeholder="첨부파일">
 						</div>
 					</div>

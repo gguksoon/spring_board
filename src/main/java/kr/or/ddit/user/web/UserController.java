@@ -92,6 +92,14 @@ public class UserController {
 		response.addCookie(cookie);
 	}
 	
+	/**
+	* Method : logout
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param session
+	* @return
+	* Method 설명 : 로그아웃 요청
+	*/
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate(); // 세션의 모든 내용을 지움
@@ -99,6 +107,15 @@ public class UserController {
 		return "redirect:/login";
 	}
 	
+	/**
+	* Method : userPicture
+	* 작성자 : JO MIN SOO
+	* 변경이력 :
+	* @param userId
+	* @param response
+	* @throws IOException
+	* Method 설명 : 유저 사진 요청
+	*/
 	@RequestMapping("userPicture")
 	public void userPicture(String userId, HttpServletResponse response) throws IOException {
 		User user = userService.getUser(userId);

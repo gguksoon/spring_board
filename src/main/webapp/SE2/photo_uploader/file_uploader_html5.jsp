@@ -48,6 +48,6 @@
 	os.flush();
 	os.close();
 
-	sFileInfo += "&bNewLine=true&sFileName="+ name+"&sFileURL="+"/upload/"+realname;
+	sFileInfo += "&bNewLine=true&sFileName="+ name+"&sFileURL="+ application.getContextPath() + "/upload/"+realname;
 	out.println(sFileInfo);
 %>

@@ -2,8 +2,6 @@ package kr.or.ddit.board.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-
 import kr.or.ddit.board.model.Board;
 
 public interface IBoardDao {

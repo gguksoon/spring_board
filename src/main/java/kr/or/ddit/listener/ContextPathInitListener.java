@@ -1,15 +1,11 @@
 package kr.or.ddit.listener;
 
-import java.util.ArrayList;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import kr.or.ddit.user.model.User;
 
 public class ContextPathInitListener implements ServletContextListener{
 

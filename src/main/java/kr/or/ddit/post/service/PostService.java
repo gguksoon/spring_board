@@ -6,13 +6,10 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.post.model.Post;
 import kr.or.ddit.post.repository.IPostDao;
-import kr.or.ddit.post.repository.PostDao;
-import kr.or.ddit.util.MybatisUtil;
 
 @Service
 public class PostService implements IPostService {
